@@ -1,9 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Service Report</title>
+    <title>Select Service Date - Service Maintenance</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="password-page">
@@ -12,7 +12,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="your-logo.png" alt="Company Logo" class="logo-img">
+                    <img src="images/logo.png" alt="TK FANTASTIC Logo" class="logo-img" style="height: 50px;">
                 </div>
                 <nav class="nav-desktop">
                     <a href="index.html#hero" class="nav-link">Home</a>
@@ -37,117 +37,159 @@
     <section class="hero">
         <div class="hero-overlay"></div>
         <div class="container">
-            <div class="password-container" style="max-width: 700px;">
-                <h1 class="title">Select Your Service Report</h1>
-                <p class="company-name" id="companyDisplay">Loading...</p>
+            <div class="password-container" style="max-width: 900px;">
+                <h1 class="title" style="font-size: 2.5rem; margin-bottom: 1rem;">📅 Select Service Date</h1>
+                <p class="company-name" id="companyDisplay" style="font-size: 1.3rem; font-weight: 600;">Loading...</p>
 
-                <!-- Service History Summary -->
+                <!-- Last & Next Service Dates -->
                 <div class="date-section">
-                    <h3 class="section-header">Service Schedule</h3>
-                    
                     <div class="service-history">
                         <div class="history-card">
                             <div class="history-icon">📅</div>
                             <div class="history-info">
                                 <p>Last Service Date</p>
-                                <p id="lastServiceDate">Loading...</p>
+                                <p id="lastServiceDate">-</p>
                             </div>
                         </div>
-
                         <div class="history-card">
                             <div class="history-icon">🔔</div>
                             <div class="history-info">
                                 <p>Next Service Date</p>
-                                <p id="nextServiceDate">Loading...</p>
-                                <p class="history-days" id="daysUntilNext"></p>
+                                <p id="nextServiceDate">-</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Available Service Reports -->
-                <div class="date-section">
-                    <h3 class="section-header">Select Your Service Report</h3>
-                    <p style="color: rgba(255, 255, 255, 0.9); text-align: center; margin-bottom: 1.5rem;">
-                        Click on a date below to view details
+                <!-- Available Service Dates -->
+                <div class="available-dates">
+                    <p style="text-align: center; color: white; font-size: 1.2rem; margin-bottom: 1.5rem;">
+                        📋 Click on a date to view service reports
                     </p>
-
-                    <div id="datesList" class="dates-list">
-                        <!-- Dates will be dynamically populated here by JavaScript -->
-                    </div>
+                    <div id="dateList" class="dates-list"></div>
                 </div>
 
-                <button type="button" onclick="window.location.href='password.html'" class="back-button">
-                    BACK TO PASSWORD
+                <button class="back-button" onclick="window.location.href='password.html'" style="margin-top: 1.5rem;">
+                    ← BACK TO PASSWORD
                 </button>
             </div>
         </div>
-     
+    </section>
 
+    <script src="company-data.js"></script>
+    <script>
+        // ==================== MOBILE MENU ====================
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
 
-  <script src="company-data.js"></script>
-
-  <script>
-    function normalizeCompany(name) {
-      return (name || '').trim().toUpperCase();
-    }
-
-    const rawCompany = localStorage.getItem('companyName');
-    if (!rawCompany) {
-      alert('No company selected. Returning to start.');
-      window.location.href = 'index.html';
-    }
-
-    const companyKey = normalizeCompany(rawCompany);
-    document.getElementById('companyDisplay').textContent = 'Company: ' + rawCompany;
-
-    if (typeof companyReportLinks === 'undefined') {
-      alert('Company data not loaded. Make sure company-data.js is loaded.');
-      throw new Error('companyReportLinks missing');
-    }
-
-    const companyReports = companyReportLinks[companyKey] || companyReportLinks[rawCompany];
-
-    if (!companyReports) {
-      // No dates found
-      document.getElementById('dateList').innerHTML = '<p>No service dates found for this company.</p>';
-    } else {
-      // Create sorted date array (descending)
-      const dates = Object.keys(companyReports).sort((a,b) => {
-        // Try date parse; keep unknown keys at the end
-        const da = new Date(a).getTime();
-        const db = new Date(b).getTime();
-        if (isNaN(da) && isNaN(db)) return a.localeCompare(b);
-        if (isNaN(da)) return 1;
-        if (isNaN(db)) return -1;
-        return db - da;
-      });
-
-      const dateList = document.getElementById('dateList');
-
-      dates.forEach(dateKey => {
-        const button = document.createElement('button');
-        button.className = 'date-btn';
-        // show a user-friendly label (attempt to parse date)
-        let label = dateKey;
-        const parsed = new Date(dateKey);
-        if (!isNaN(parsed.getTime())) {
-          label = parsed.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+            });
         }
-        button.textContent = label;
-        button.addEventListener('click', () => {
-          // Save selected date and fans array to localStorage then go to fan-selection
-          const fans = Object.keys(companyReports[dateKey]);
-          localStorage.setItem('selectedServiceDate', dateKey);
-          localStorage.setItem('fansServiced', JSON.stringify(fans));
-          window.location.href = 'fan-selection.html';
-        });
-        dateList.appendChild(button);
-      });
-    }
-  </script>
+
+        // ==================== NORMALIZE COMPANY NAME ====================
+        function normalizeCompany(name) {
+            return (name || '').trim().toUpperCase();
+        }
+
+        // ==================== PAGE INITIALIZATION ====================
+        const rawCompany = localStorage.getItem('companyName') || localStorage.getItem('selectedCompany');
+        
+        console.log('🔍 Raw company from localStorage:', rawCompany);
+        
+        if (!rawCompany) {
+            alert('No company selected. Returning to start.');
+            window.location.href = 'index.html';
+        }
+
+        const companyKey = normalizeCompany(rawCompany);
+        document.getElementById('companyDisplay').textContent = rawCompany;
+
+        console.log('🔍 Looking for company:', companyKey);
+        console.log('🔍 Available companies:', Object.keys(companyReportLinks || {}));
+
+        if (typeof companyReportLinks === 'undefined') {
+            alert('Company data not loaded. Make sure company-data.js is loaded.');
+            throw new Error('companyReportLinks missing');
+        }
+
+        // Try both normalized and original company name
+        const companyReports = companyReportLinks[companyKey] || companyReportLinks[rawCompany];
+        
+        // Get service dates info
+        const companyInfo = companyServiceData[companyKey] || companyServiceData[rawCompany] || {};
+        
+        console.log('✅ Company reports found:', companyReports);
+        console.log('✅ Company info:', companyInfo);
+
+        // Display Last & Next Service Dates
+        const lastDate = companyInfo.lastServiceDate || 'N/A';
+        const nextDate = companyInfo.nextServiceDate || 'N/A';
+        
+        document.getElementById('lastServiceDate').textContent = lastDate;
+        document.getElementById('nextServiceDate').textContent = nextDate;
+
+        console.log('📅 Last service:', lastDate);
+        console.log('🔔 Next service:', nextDate);
+
+        // ==================== DISPLAY SERVICE DATES ====================
+        if (!companyReports) {
+            document.getElementById('dateList').innerHTML = '<div class="error-message">No service dates found for this company.</div>';
+        } else {
+            // Create sorted date array (descending - newest first)
+            const dates = Object.keys(companyReports).sort((a, b) => {
+                const da = new Date(a).getTime();
+                const db = new Date(b).getTime();
+                if (isNaN(da) && isNaN(db)) return a.localeCompare(b);
+                if (isNaN(da)) return 1;
+                if (isNaN(db)) return -1;
+                return db - da; // Descending
+            });
+
+            console.log('📅 Available service dates:', dates);
+
+            const dateList = document.getElementById('dateList');
+
+            dates.forEach(dateKey => {
+                const button = document.createElement('button');
+                button.className = 'date-item';
+                
+                // Format date nicely
+                let label = dateKey;
+                const parsed = new Date(dateKey);
+                if (!isNaN(parsed.getTime())) {
+                    label = parsed.toLocaleDateString('en-GB', { 
+                        day: '2-digit', 
+                        month: 'long', 
+                        year: 'numeric' 
+                    });
+                }
+                
+                // Count how many fans were serviced
+                const fansCount = Object.keys(companyReports[dateKey]).length;
+                
+                button.innerHTML = `
+                    <span>📅 ${label}</span>
+                    <span>${fansCount} fan${fansCount !== 1 ? 's' : ''} serviced</span>
+                `;
+                
+                button.addEventListener('click', () => {
+                    console.log('✅ Selected date:', dateKey);
+                    const fans = Object.keys(companyReports[dateKey]);
+                    localStorage.setItem('selectedServiceDate', dateKey);
+                    localStorage.setItem('fansServiced', JSON.stringify(fans));
+                    window.location.href = 'fan-selection.html';
+                });
+                
+                dateList.appendChild(button);
+            });
+        }
+    </script>
 </body>
 </html>
+
+
 
 
 
