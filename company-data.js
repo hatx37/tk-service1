@@ -5,7 +5,7 @@
 
 // -------------------- COMPANY PASSWORDS --------------------
 const companyPasswords = {
-  'AFN SPORTS EQUIPMENT SDN BHD': { password: 'afn123' },
+  'AFN SPORTS EQUIPMENT SDN BHD': { password: 'afn1234' },
   'AKER SOLUTIONS': { password: 'Aker@tkfant' },
   'ANSHIN': { password: 'Anshin@tkfant' },
   'ARATA AUTO CENTRE SDN BHD': { password: 'Arata@tkfant' },
@@ -127,4 +127,5 @@ const companyReportLinks = {
       'Fan 1': 'https://drive.google.com/drive/u/2/folders/1fEEStmL9l-re8yXoe4ekW0QURSC58vkW'
     }
   }
+
 };
