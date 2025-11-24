@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyFantastic Service Maintenance </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-box">
+                        <img src="your-logo.png" alt="Company Logo" class="logo-img">
+                    </div>
+                </div>
+                <nav class="nav-desktop">
+                    <a href="#hero" class="nav-link">Home</a>
+                    <a href="#service" class="nav-link">Service Report</a>
+                    <a href="#contact" class="nav-link">Contact Us</a>
+                </nav>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <nav class="nav-mobile" id="mobileMenu">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#service" class="nav-link">Service Report</a>
+                <a href="#contact" class="nav-link">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+     <section id="hero" class="hero" style="background-image: url('your-hero.png');">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="title"> MyFantastic Service Maintenance </h1>
+                
+                <!-- Welcome Message -->
+                <div class="welcome-message">
+                    <p> <strong> The smart way to manage your services. Easily check your service reports, track expired or upcoming due dates, and stay updated in real time. Simple, fast, and reliable — all in one platform. Keep tracking with us</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Section (Search Box) -->
+    <section id="service" class="service-section">
+        <div class="container">
+            <div class="search-container">
+                <h2 class="section-title">Search for your company to access service reports</h2>
+                
+                <form id="searchForm" class="search-form">
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Type company name..."
+                            autocomplete="off"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="go-button">GO</button>
+                    
+                    <div id="suggestionsList" class="suggestions-list"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Services Section -->
+    <section id="our-services" class="our-services-section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Equipment Maintenance</h3>
+                    <p>Regular maintenance and inspection of industrial fans and equipment</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Service Reports</h3>
+                    <p>Detailed documentation of all maintenance work performed</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛠️</div>
+                    <h3>Installation</h3>
+                    <p>Professional installation of new equipment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contact Information</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>TK FANTASTIC SDN. BHD.</h3>
+                    <p class="company-reg">(1236053-U)</p>
+                    
+                    <div class="contact-item">
+                        <strong>Address:</strong>
+                        <p>No. 14A, Jalan Sg. Indah 3A,<br>
+                        Taman Sg. Kapar Indah,<br>
+                        42100 Klang, Selangor Darul Ehsan,<br>
+                        Malaysia</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>Tel:</strong>
+                        <a href="tel:+60332927339">+603-3292 7339</a>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>WhatsApp:</strong>
+                        <a href="https://wa.me/60111876933" target="_blank">+6011-1876 9339</a>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>Email:</strong>
+                        <a href="mailto:enquiry@fantastic.my">enquiry@fantastic.my</a>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>Website:</strong>
+                        <a href="https://www.fantastic.my" target="_blank">https://www.fantastic.my</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 TK FANTASTIC SDN. BHD. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script src="company-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

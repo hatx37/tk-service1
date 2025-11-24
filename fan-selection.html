@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fan Selection — Service Reports</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f3f4f6; color:#111; margin:0; padding:20px;}
+    .container { max-width:900px; margin:30px auto; background:#fff; padding:24px; border-radius:8px; box-shadow:0 6px 22px rgba(0,0,0,0.06);}
+    .fan-grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap:12px; margin-top:18px; }
+    .fan-btn { background:#fff; border:1px solid #e8e8e8; padding:12px; border-radius:8px; text-align:left; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button onclick="goBack()">← Back to dates</button>
+    <h1>Choose fan report</h1>
+    <p id="companyDisplay">Company: —</p>
+    <p id="dateDisplay">Date: —</p>
+
+    <div id="fanGrid" class="fan-grid"></div>
+  </div>
+
+  <script src="company-data.js"></script>
+
+  <script>
+    function normalizeCompany(name) { return (name||'').trim().toUpperCase(); }
+
+    function formatDateLabel(dateKey) {
+      const d = new Date(dateKey);
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+      }
+      return dateKey;
+    }
+
+    function goBack() {
+      window.location.href = 'date-selection.html';
+    }
+
+    function viewReport(fanName) {
+      const rawCompany = localStorage.getItem('companyName');
+      const companyKey = normalizeCompany(rawCompany);
+      const selectedDate = localStorage.getItem('selectedServiceDate');
+
+      if (!rawCompany || !selectedDate) {
+        alert('Missing info. Please start again.');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Look up in companyReportLinks
+      const reportsForCompany = companyReportLinks[companyKey] || companyReportLinks[rawCompany];
+      if (!reportsForCompany) {
+        alert('No reports found for this company.');
+        return;
+      }
+
+      const dateReports = reportsForCompany[selectedDate];
+      if (!dateReports) {
+        alert('No reports for selected date. Please choose another date.');
+        return;
+      }
+
+      const url = dateReports[fanName];
+      if (!url || url.includes('YOUR_FILE_ID_HERE')) {
+        alert('Report URL not configured for this fan. Contact support.');
+        return;
+      }
+
+      window.open(url, '_blank');
+    }
+
+    // On load: populate
+    window.addEventListener('DOMContentLoaded', () => {
+      const companyRaw = localStorage.getItem('companyName');
+      const selectedDate = localStorage.getItem('selectedServiceDate');
+      const fansJSON = localStorage.getItem('fansServiced');
+
+      if (!companyRaw || !selectedDate || !fansJSON) {
+        alert('Required data missing. Returning to start.');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      document.getElementById('companyDisplay').textContent = 'Company: ' + companyRaw;
+      document.getElementById('dateDisplay').textContent = 'Date: ' + formatDateLabel(selectedDate);
+
+      let fans = [];
+      try {
+        fans = JSON.parse(fansJSON);
+      } catch (e) {
+        console.error('Error parsing fansServiced:', e);
+        alert('Fan data corrupted. Please choose date again.');
+        window.location.href = 'date-selection.html';
+        return;
+      }
+
+      const grid = document.getElementById('fanGrid');
+      grid.innerHTML = '';
+      if (fans.length === 0) {
+        grid.innerHTML = '<p>No fans serviced on this date.</p>';
+        return;
+      }
+      fans.forEach(f => {
+        const div = document.createElement('div');
+        div.className = 'fan-btn';
+        div.innerHTML = `<strong>${f}</strong><div style="margin-top:8px;">View report →</div>`;
+        div.addEventListener('click', () => viewReport(f));
+        grid.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>

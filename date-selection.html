@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Select Service Date</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f5f6f7; color:#111; margin:0; padding:20px;}
+    .container { max-width:900px; margin:30px auto; background:#fff; padding:24px; border-radius:8px; box-shadow:0 6px 22px rgba(0,0,0,0.06);}
+    button.date-btn { display:block; width:100%; text-align:left; padding:12px 16px; margin:8px 0; border-radius:6px; border:1px solid #e2e2e2; background:#fff; cursor:pointer;}
+    .back { margin-bottom:12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="back" onclick="window.location.href='index.html'">← Back</button>
+    <h1>Select a service date</h1>
+    <p id="companyDisplay">Company: —</p>
+    <div id="dateList"></div>
+  </div>
+
+  <script src="company-data.js"></script>
+
+  <script>
+    function normalizeCompany(name) {
+      return (name || '').trim().toUpperCase();
+    }
+
+    const rawCompany = localStorage.getItem('companyName');
+    if (!rawCompany) {
+      alert('No company selected. Returning to start.');
+      window.location.href = 'index.html';
+    }
+
+    const companyKey = normalizeCompany(rawCompany);
+    document.getElementById('companyDisplay').textContent = 'Company: ' + rawCompany;
+
+    if (typeof companyReportLinks === 'undefined') {
+      alert('Company data not loaded. Make sure company-data.js is loaded.');
+      throw new Error('companyReportLinks missing');
+    }
+
+    const companyReports = companyReportLinks[companyKey] || companyReportLinks[rawCompany];
+
+    if (!companyReports) {
+      // No dates found
+      document.getElementById('dateList').innerHTML = '<p>No service dates found for this company.</p>';
+    } else {
+      // Create sorted date array (descending)
+      const dates = Object.keys(companyReports).sort((a,b) => {
+        // Try date parse; keep unknown keys at the end
+        const da = new Date(a).getTime();
+        const db = new Date(b).getTime();
+        if (isNaN(da) && isNaN(db)) return a.localeCompare(b);
+        if (isNaN(da)) return 1;
+        if (isNaN(db)) return -1;
+        return db - da;
+      });
+
+      const dateList = document.getElementById('dateList');
+
+      dates.forEach(dateKey => {
+        const button = document.createElement('button');
+        button.className = 'date-btn';
+        // show a user-friendly label (attempt to parse date)
+        let label = dateKey;
+        const parsed = new Date(dateKey);
+        if (!isNaN(parsed.getTime())) {
+          label = parsed.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+        }
+        button.textContent = label;
+        button.addEventListener('click', () => {
+          // Save selected date and fans array to localStorage then go to fan-selection
+          const fans = Object.keys(companyReports[dateKey]);
+          localStorage.setItem('selectedServiceDate', dateKey);
+          localStorage.setItem('fansServiced', JSON.stringify(fans));
+          window.location.href = 'fan-selection.html';
+        });
+        dateList.appendChild(button);
+      });
+    }
+  </script>
+</body>
+</html>
