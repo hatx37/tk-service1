@@ -1,54 +1,3 @@
-// ==================== COMPANY PASSWORD DATA ====================
-const companyPasswords = {
-    'AFN SPORTS EQUIPMENT SDN BHD': { password: 'Afn@tkfant' },
-    'AKER SOLUTIONS': { password: 'Aker@tkfant' },
-    'ANSHIN': { password: 'Anshin@tkfant' },
-    'ARATA AUTO CENTRE SDN BHD': { password: 'Arata@tkfant' },
-    'BBCC DEVELOPMENT': { password: 'Bbcc@tkfant' },
-    'CITY UNIVERSITY': { password: 'CU@tkfant' },
-    'CLICKASIA SDN BHD': { password: 'Click@tkfant' },
-    'DATARAN SEGAR HUAT HUAT HUAT FOOD COURT': { password: 'Hhh@tkfant' },
-    'DHUB': { password: 'Dhub@tkfant' },
-    'ECRL': { password: 'Ecrl@tkfant' },
-    'EXHIBITION SAMPLE': { password: 'bbnmm' },
-    'FEDEX-BUKIT JELUTONG': { password: 'Fedexbj@tkfant' },
-    'FEDEX-HITECH': { password: 'Hitech@tkfant' },
-    'FEDEX-KLIA': { password: 'Klia@tkfant' },
-    'FINEGUARD INDUSTRIES': { password: 'Fine@tkfant' },
-    'FOODAGON CONNEXION SDN BHD': { password: 'Food@tkfant' },
-    'FURI GLOBAL SDN BHD': { password: 'Furi@tkfant' },
-    'GBB BAKERY': { password: 'Gbb@tkfant' },
-    'GOOD TIMING FOOD VILLAGE': { password: 'Good@tkfant' },
-    'HONDA LOGISTICS': { password: 'Honda@tkfant' },
-    'ISKANDAR EDUCATION ENTERPRISE SDN BHD': { password: 'Iskandaredu@tkfant' },
-    'ISKANDAR INNOVATIONS SDN BHD': { password: 'Iskandarin@tkfant' },
-    'JOYCAMP PJ SDN BHD': { password: 'Joy@tkfant' },
-    'KOH TIKI OKR SDN BHD': { password: 'Koh@tkfant' },
-    'KUEHNE + NAGEL': { password: 'Kuehne@tkfant' },
-    'LH ELECTRIC & SERVICES': { password: 'Lh@tkfant' },
-    'LOTUS\'S STORE (MALAYSIA) SDN BHD': { password: 'Lotus@tkfant' },
-    'LUXE ACRE SDN BHD': { password: 'Luxe@tkfant' },
-    'MACRO PERSPECTIVE SDN BHD': { password: 'Macro@tkfant' },
-    'MILLENNIUM WELT SDN BHD': { password: 'Millen@tkfant' },
-    'NESTLE MANUFACTURING (M) SDN BHD (CHEMBONG)': { password: 'Chembong@tkfant' },
-    'NESTLE MANUFACTURING (M) SDN BHD (SA)': { password: 'Sa@tkfant' },
-    'PERCETAKAN TENAGA': { password: 'Pt@tkfant' },
-    'PERODUA MANUFACTURING SDN BHD': { password: 'Perodua@tkfant' },
-    'REDVEST': { password: 'Redvest@tkfant' },
-    'SAGA MAKMUR SDN BHD': { password: 'Saga@tkfant' },
-    'SEA ASIA SDN BHD': { password: 'Sea@tkfant' },
-    'SIN TAI HING': { password: 'Sin@tkfant' },
-    'SJK(C) HUA LIAN 3': { password: 'Hualian3@tkfant' },
-    'SJK(C) KEHSENG': { password: 'Kehseng@tkfant' },
-    'SK SAUJANA IMPIAN 2': { password: 'Impian2@tkfant' },
-    'SMK TELOK DATOK': { password: 'Smk@tkfant' },
-    'SUNSET': { password: 'Sunset@tkfant' },
-    'T7 AERO REPORT': { password: 'T7@tkfant' },
-    'TAYLOR (TEG)': { password: 'Taylor@tkfant' },
-    'UCSI INTERNATIONAL SCHOOL SB': { password: 'Ucsi@tkfant' },
-    'UPPER HERITAGE SDN BHD': { password: 'Upper@tkfant' },
-    'YINGWAH': { password: 'Yingwah@tkfant' }
-};
 
 // ==================== MOBILE MENU ====================
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -169,6 +118,7 @@ function showError(message) {
         errorMessage.style.display = 'none';
     }, 5000);
 }
+
 
 
 
